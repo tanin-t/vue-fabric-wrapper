@@ -44,6 +44,7 @@
       </fabric-group>
       <fabric-polyline :id="342102"></fabric-polyline>
       <fabric-svg-from-url :id="'ttyuud'"></fabric-svg-from-url>
+      <fabric-svg-from-url :id="'ttyuud2'" fill="green" :top="120"></fabric-svg-from-url>
     </fabric-canvas>
     <div id="drag1" @dragstart="dragStart" class="draggable" draggable></div>
     {{ canvas }}

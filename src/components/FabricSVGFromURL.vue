@@ -60,13 +60,14 @@ export default {
   },
   props: {
     id: { type: [Number, String], required: true },
-    url: { type: String, default: "../svg/pipe.svg" }
+    url: { type: String, default: "../svg/pipe.svg" },
+    fill: { type: String, default: null }
   },
   data() {
     return {
       objs: null,
       groupProps: null,
-      customWatch: ["url"]
+      customWatch: ["url", "fill"]
     };
   },
   created() {
@@ -81,12 +82,27 @@ export default {
         this.destroySVG();
       }
       this.createSVG();
+    },
+    fill(newValue) {
+      if (this.objs && this.fill) {
+        for (const path of this.objs) {
+          path.fill = this.fill
+        }
+      } else {
+        this.createSVG()
+      }
     }
   },
   methods: {
     createSVG() {
       this.fabric.loadSVGFromURL(this.url, (objs, options) => {
         this.objs = objs;
+
+        if (this.fill) {
+          for (const path of this.objs) {
+            path.fill = this.fill
+          }
+        }
       });
     },
     destroySVG() {
