@@ -41,7 +41,13 @@ let canvasEvents = [
   "dragover",
   "dragenter",
   "dragleave",
-  "drop"
+  "drop",
+  //Gesture events
+  "touch:gesture",
+  "touch:drag",
+  "touch:orientation",
+  "touch:shake",
+  "touch:longpress"
 ];
 
 import * as fabric from "fabric";
