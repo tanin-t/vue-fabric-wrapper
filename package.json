@@ -32,7 +32,8 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"fabric": "github:tanin-t/fabric.js"
+		"fabric": "github:tanin-t/fabric.js",
+		"vue-router": "^3.4.3"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "4.3.1",

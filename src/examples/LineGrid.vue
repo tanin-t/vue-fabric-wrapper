@@ -13,19 +13,31 @@
       <b-row>
         <b-col>Grid Size:</b-col>
         <b-col>
-          <b-form-input type="number" v-model.number="gridSize" min="10"></b-form-input>
+          <b-form-input
+            type="number"
+            v-model.number="gridSize"
+            min="10"
+          ></b-form-input>
         </b-col>
       </b-row>
       <b-row>
         <b-col>Grid Height:</b-col>
         <b-col>
-          <b-form-input type="number" v-model.number="gridHeight" min="100"></b-form-input>
+          <b-form-input
+            type="number"
+            v-model.number="gridHeight"
+            min="100"
+          ></b-form-input>
         </b-col>
       </b-row>
       <b-row>
         <b-col>Grid Width:</b-col>
         <b-col>
-          <b-form-input type="number" v-model.number="gridWidth" min="100"></b-form-input>
+          <b-form-input
+            type="number"
+            v-model.number="gridWidth"
+            min="100"
+          ></b-form-input>
         </b-col>
       </b-row>
     </b-container>

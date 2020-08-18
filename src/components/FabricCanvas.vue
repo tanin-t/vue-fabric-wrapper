@@ -72,6 +72,11 @@ export default {
     fireMiddleClick: { type: Boolean, required: false, default: false },
     fireRightClick: { type: Boolean, required: false, default: false },
     freeDrawingCursor: { type: String, required: false, default: "crosshair" },
+    freeDrawingBrush: {
+      type: Object,
+      required: false,
+      default: () => ({ width: 1, color: "#000000" })
+    },
     hoverCursor: { type: String, required: false, default: "move" },
     isDrawingMode: { type: Boolean, required: false, default: false },
     moveCursor: { type: String, required: false, default: "move" },
@@ -184,6 +189,17 @@ export default {
       this.canvas.setOverlayColor(newValue, () => {
         this.canvas.renderAll();
       });
+    },
+    isDrawingMode(newValue) {
+      this.canvas.isDrawingMode = newValue;
+    },
+    freeDrawingBrush: {
+      handler(newValue) {
+        this.canvas.freeDrawingBrush = new fabric.PencilBrush(this.canvas);
+        this.canvas.freeDrawingBrush.width = parseInt(newValue.width, 10) || 1;
+        this.canvas.freeDrawingBrush.color = newValue.color;
+      },
+      deep: true
     }
   }
 };

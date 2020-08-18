@@ -86,10 +86,10 @@ export default {
     fill(newValue) {
       if (this.objs && this.fill) {
         for (const path of this.objs) {
-          path.fill = this.fill
+          path.fill = this.fill;
         }
       } else {
-        this.createSVG()
+        this.createSVG();
       }
     }
   },
@@ -100,7 +100,7 @@ export default {
 
         if (this.fill) {
           for (const path of this.objs) {
-            path.fill = this.fill
+            path.fill = this.fill;
           }
         }
       });
