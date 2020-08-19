@@ -37,10 +37,13 @@
             </template>
           </fabric-canvas>
         </b-col>
-        <b-col>
-          <b-button @click="toggleDrawingMode()">{{
-            isDrawingMode ? "Stop Drawing" : "Start Drawing"
-          }}</b-button>
+        <b-col style="text-align: left;">
+          <b-button @click="toggleDrawingMode()">
+            {{ isDrawingMode ? "Stop Drawing" : "Start Drawing" }}
+          </b-button>
+          <b-button @click="clearCanvas()">
+            Clear
+          </b-button>
           <br />
           <br />
 
@@ -55,6 +58,11 @@
             type="color"
             v-model="freeDrawingBrush.color"
           ></b-form-input>
+
+          <br />
+          <b-form-checkbox v-model="isAutoGroupDrawing">
+            Auto group when stop drawing
+          </b-form-checkbox>
         </b-col>
       </b-row>
     </b-container>
@@ -74,14 +82,19 @@ export default {
   data() {
     return {
       isDrawingMode: true,
+      isAutoGroupDrawing: false,
       freeDrawingBrush: {
         width: 1,
         color: "#000000"
       },
       objs: [],
-      list: [],
-      selection: []
+      drawingPaths: []
     };
+  },
+  computed: {
+    json_objs() {
+      return JSON.stringify(this.objs);
+    }
   },
   methods: {
     toggleDrawingMode() {
@@ -89,25 +102,17 @@ export default {
       this.isDrawingMode = !this.isDrawingMode;
 
       if (!this.isDrawingMode) {
-        const positions = [];
-        for (const obj of this.list) {
-          obj.id = this.genID();
-          positions.push({ top: obj.top, left: obj.left });
+        if (this.isAutoGroupDrawing) {
+          this.makeGroup(this.drawingPaths);
+        } else {
+          for (const path of this.drawingPaths) {
+            path.id = this.genID();
+            this.objs.push(path);
+            canvas.remove(path);
+          }
         }
 
-        const group = new fabric.Group(this.list);
-        for (let i = 0; i < positions.length; i++) {
-          group.item(i).set({ top: positions[i].top, left: positions[i].left });
-        }
-        group.id = this.genID();
-        this.objs.push(group);
-
-        for (const obj of this.list) {
-          canvas.remove(obj);
-        }
-
-        this.list = [];
-        console.log(this.objs, this.list);
+        this.drawingPaths = [];
       }
     },
     genID() {
@@ -121,20 +126,40 @@ export default {
     },
     onObjectAdded(e) {
       if (this.isDrawingMode) {
-        this.list.push(e.target);
+        this.drawingPaths.push(e.target);
       }
     },
-    // onSelectionCreated(e) {
-    //   console.log("onSelectionCreated", e);
-    //   this.selection = e.target;
-    // },
-    // onSelectionUpdated(e) {
-    //   console.log("onSelectionUpdated", e);
-    //   this.selection = e.target;
-    // },
-    isEqual(obj1, obj2) {
-      const props = [""];
-      return false;
+    clearCanvas () {
+      this.objs = []
+    },
+    makeGroup(paths) {
+      // fabric.Group() move center of drawing path to 0,0
+      // So I store the position of each path in an array
+      // before creating group.
+      const positions = [];
+      for (const path of paths) {
+        path.id = this.genID();
+        positions.push({ top: path.top, left: path.left });
+      }
+
+      // Create group
+      const group = new fabric.Group(paths);
+
+      // After creating group re-assign the position of each path
+      for (let i = 0; i < positions.length; i++) {
+        group.item(i).set({ top: positions[i].top, left: positions[i].left });
+      }
+
+      // add group object to main objs array
+      group.id = this.genID();
+      this.objs.push(group);
+
+      // remove the duplicate paths
+      const canvas = this.$refs.canvas.canvas
+      for (const path of paths) {
+        canvas.remove(path);
+      }
+      canvas.requestRenderAll();
     }
   }
 };
