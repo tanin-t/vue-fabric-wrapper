@@ -7,6 +7,7 @@ import DotGrid from "./examples/DotGrid";
 import LineGrid from "./examples/LineGrid";
 import StickMan from "./examples/StickMan";
 import BasicShape from "./examples/BasicShape";
+import FreeDrawing from "./examples/FreeDrawing";
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -18,7 +19,8 @@ const router = new VueRouter({
     { path: "/examples/dot-grid", component: DotGrid },
     { path: "/examples/line-grid", component: LineGrid },
     { path: "/examples/stick-man", component: StickMan },
-    { path: "/examples/basic-shape", component: BasicShape }
+    { path: "/examples/basic-shape", component: BasicShape },
+    { path: "/examples/free-drawing", component: FreeDrawing }
   ]
 });
 

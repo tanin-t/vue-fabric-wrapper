@@ -23,6 +23,9 @@
             <b-dropdown-item to="/examples/basic-shape">
               BasicShape.vue
             </b-dropdown-item>
+            <b-dropdown-item to="/examples/free-drawing">
+              FreeDrawing.vue
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
