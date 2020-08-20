@@ -52,7 +52,10 @@ const REQUIRE_RENDER = [
   "skewY",
   "top",
   "width",
-  "visible"
+  "visible",
+  "fill",
+  "stroke",
+  "strokeWidth"
 ];
 
 //Monitor the fabric Object (item) and emit an update to allow .sync usage

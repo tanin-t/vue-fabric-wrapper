@@ -32,7 +32,8 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"fabric": "3.6.3"
+		"fabric": "3.6.3",
+		"vue-router": "^3.4.3"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "4.3.1",
