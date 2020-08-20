@@ -1,15 +1,14 @@
 import Vue from "vue";
-import Home from "./Home.vue";
+import Layout from "./Layout.vue";
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import router from "./router";
-
 Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  render: h => h(Home)
+  render: h => h(Layout),
+  router
 }).$mount("#app");
