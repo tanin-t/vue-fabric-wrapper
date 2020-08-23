@@ -129,8 +129,8 @@ export default {
         this.drawingPaths.push(e.target);
       }
     },
-    clearCanvas () {
-      this.objs = []
+    clearCanvas() {
+      this.objs = [];
     },
     makeGroup(paths) {
       // fabric.Group() move center of drawing path to 0,0
@@ -155,7 +155,7 @@ export default {
       this.objs.push(group);
 
       // remove the duplicate paths
-      const canvas = this.$refs.canvas.canvas
+      const canvas = this.$refs.canvas.canvas;
       for (const path of paths) {
         canvas.remove(path);
       }

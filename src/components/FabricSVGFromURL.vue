@@ -1,5 +1,5 @@
 <template>
-  <fabric-group :id="id" v-bind.sync="groupProps">
+  <fabric-group v-on="createGroupEvents()" :id="id" v-bind.sync="groupProps">
     <fabric-path
       v-for="(path, index) in objs"
       :id="id + '_' + index"
@@ -26,6 +26,32 @@ const EMIT_PROPS = [
   "skewY",
   "top",
   "width"
+];
+
+const GROUP_EVENTS = [
+  "added",
+  "removed",
+  "selected",
+  "deselected",
+  "modified",
+  "moved",
+  "scaled",
+  "rotated",
+  "skewed",
+  "rotating",
+  "scaling",
+  "moving",
+  "skewing",
+  "mousedown",
+  "mouseup",
+  "mouseover",
+  "mouseout",
+  "mousewheel",
+  "mousedblclick",
+  "dragover",
+  "dragenter",
+  "dragleave",
+  "drop"
 ];
 
 //Monitor the group Object and emit an update to allow .sync usage
@@ -67,11 +93,11 @@ export default {
     return {
       objs: null,
       groupProps: null,
-      customWatch: ["url", "fill"]
+      customWatch: ["url"]
     };
   },
   created() {
-    this.groupProps = this.$attrs; //any props that are not in the prop definition are assuemed to be for the group
+    this.groupProps = { ...this.$attrs, fill: this.fill }; //any props that are not in the prop definition are assuemed to be for the group
     this.createSVG();
     this.createGroupAttrWatchers();
     this.createFabricItemWatchers();
@@ -85,6 +111,7 @@ export default {
     },
     fill(newValue) {
       if (this.objs && this.fill) {
+        this.groupProps.fill = newValue;
         for (const path of this.objs) {
           path.fill = this.fill;
         }
@@ -125,6 +152,11 @@ export default {
         }
         this.$watch("$attrs." + key, watchAttrs(key, true));
       });
+    },
+    createGroupEvents() {
+      const events = {};
+      GROUP_EVENTS.forEach(key => (events[key] = e => this.$emit(key, e)));
+      return events;
     }
   },
   beforeDestroy() {

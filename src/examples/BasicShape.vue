@@ -37,6 +37,14 @@
                 @mousedblclick="openSettingDialog($event, fabricObject)"
                 @modified="onObjectModified($event, fabricObject)"
               ></fabric-line>
+              <fabric-svg-from-url
+                v-if="fabricObject.type === 'svg'"
+                :id="fabricObject.id"
+                :key="fabricObject.id"
+                v-bind="fabricObject.props"
+                @mousedblclick="openSettingDialog($event, fabricObject)"
+                @modified="onObjectModified($event, fabricObject)"
+              ></fabric-svg-from-url>
             </template>
             <div>Double click at the shape to open control dialog</div>
             <hr />
@@ -132,6 +140,12 @@
             @click="addLineObjectToCanvas()"
             >Line</b-button
           >
+          <b-button
+            variant="outline-primary"
+            class="mx-1"
+            @click="addSVGObjectToCanvas()"
+            >SVG</b-button
+          >
         </div>
       </b-col>
     </b-row>
@@ -144,6 +158,7 @@ import FabricCircle from "../components/FabricCircle";
 import FabricRectangle from "../components/FabricRectangle";
 import FabricTriangle from "../components/FabricTriangle";
 import FabricLine from "../components/FabricLine";
+import FabricSVGFromURL from "../components/FabricSVGFromURL";
 import uuid from "../assets/js/uuid";
 
 const FABRIC_OBJECT_PROPS = {
@@ -156,7 +171,7 @@ const FABRIC_OBJECT_PROPS = {
   originY: "top",
   angle: 0,
   scaleX: 1,
-  scalyY: 1
+  scaleY: 1
 };
 
 export default {
@@ -165,7 +180,8 @@ export default {
     FabricCircle,
     FabricRectangle,
     FabricTriangle,
-    FabricLine
+    FabricLine,
+    FabricSvgFromUrl: FabricSVGFromURL
   },
 
   data() {
@@ -205,6 +221,16 @@ export default {
           y2: 100,
           strokeWidth: 1
         }
+      });
+    },
+
+    addSVGObjectToCanvas() {
+      const props = { ...FABRIC_OBJECT_PROPS, fill: null };
+
+      this.fabricObjects.push({
+        id: uuid(),
+        type: "svg",
+        props: props
       });
     },
 
